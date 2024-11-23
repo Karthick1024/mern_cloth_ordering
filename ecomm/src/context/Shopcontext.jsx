@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { createContext, useEffect, useState } from "react";
-// import all_product from '../components/Assets/all_product'
+
 
 export const Shopcontext  = createContext(null);
 
@@ -19,21 +19,7 @@ const ShopcontextProvider = (props) =>{
     
     const [cartItems,setCartItems] = useState(getDefaultCart());
 
-    // useEffect(()=>{
-    //     fetch('http://localhost:4000/allproducts').then((response) => response.json()).then((data=>setAll_product(data)))
-    //     if(localStorage.getItem('auth-token')){
-    //         fetch('http://localhost:4000/getcart',{
-    //             method:'POST',
-    //             headers:{
-    //                 Accept:'application/form-data',
-    //                 'auth-token':`${localStorage.getItem('auth-token')}`,
-    //                 'Content-Type':'application/json',
-    //             },
-    //             body:"",
-    //         }).then((response)=>response.json())
-    //         .then((data)=>setCartItems(data));
-    //     }
-    // },[])
+
     useEffect(() => {
         // Fetch all products
         fetch('http://localhost:4000/allproducts')
@@ -95,17 +81,7 @@ const ShopcontextProvider = (props) =>{
             .then((data)=>console.log(data));
         }
     }
-    // const getTotalCartAmount = () => {
-    //     let totalamount = 0;
-    //     for(const item in cartItems){
-    //         if(cartItems[item]>0){
-    //             let itemInfo = all_product.find((product)=>product.id===Number(item));
-    //             totalamount += cartItems[item] *itemInfo.new_price ;
-    //         }
-           
-    //     }
-    //     return totalamount;
-    // }
+   
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
