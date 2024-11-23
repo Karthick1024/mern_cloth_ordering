@@ -5,7 +5,29 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");  // Import the CORS package
 require("dotenv").config(); // Load environment variables
+
+// CORS middleware configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://mern-cloth-ordering-client.vercel.app", // Vercel client URL
+      "https://mern-cloth-ordering-website.onrender.com", // Local development URL (if needed)
+    ];
+    if (allowedOrigins.includes(origin) || !origin) { // Check if origin is allowed
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+// Use the CORS middleware
+app.use(cors(corsOptions));
 
 // Middleware for JSON parsing
 app.use(express.json());
