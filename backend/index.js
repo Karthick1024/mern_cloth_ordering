@@ -333,15 +333,26 @@ const path = require("path");
 const cors = require("cors");
 require("dotenv").config(); // Load environment variables
 
+// Middleware for JSON parsing and CORS handling
 app.use(express.json());
-app.use(cors());
+
+// Configure CORS middleware
+const corsOptions = {
+  origin: [
+    "https://mern-cloth-ordering.vercel.app", // Allowed frontend domain
+    "https://mern-cloth-ordering-website.onrender.com", // Example backend domain
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "auth-token"],
+};
+app.use(cors(corsOptions));
 
 // Define BASE_URL for dynamic URL generation
 const BASE_URL = process.env.BASE_URL || `http://localhost:${port}`;
 
-// Database connection (replace credentials with your environment variables)
+// Database connection
 mongoose.connect(
-  "mongodb+srv://karthickcs10124:snapdragon675@cluster0.hpnk2.mongodb.net/e-commerce",
+  process.env.MONGO_URI || "mongodb+srv://karthickcs10124:snapdragon675@cluster0.hpnk2.mongodb.net/e-commerce",
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
