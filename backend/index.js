@@ -338,13 +338,22 @@ app.use(express.json());
 
 // Configure CORS middleware
 const corsOptions = {
-  origin: [
-    "https://mern-cloth-ordering.vercel.app", // Allowed frontend domain
-    "https://mern-cloth-ordering-website.onrender.com", // Example backend domain
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://mern-cloth-ordering.vercel.app",
+      "https://mern-cloth-ordering-website.onrender.com",
+    ];
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "auth-token"],
+  allowedHeaders: ["Content-Type", "auth-token", "Authorization"],
+  credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 // Define BASE_URL for dynamic URL generation
